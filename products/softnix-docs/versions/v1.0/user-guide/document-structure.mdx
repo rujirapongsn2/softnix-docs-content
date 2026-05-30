@@ -1,0 +1,49 @@
+---
+title: "Document Structure Guide"
+description: "มาตรฐานการจัดโครงสร้างเอกสารใน docs-repo สำหรับ Softnix Docs"
+tags: ["user-guide", "structure", "mdx"]
+---
+
+# Document Structure Guide
+
+เอกสารทุกหน้าใน Softnix Docs ควรใช้โครงสร้างเดียวกันเพื่อให้ portal, search, exports และ AI agents อ่านได้สม่ำเสมอ
+
+## Path convention
+
+```text
+products/{product_slug}/versions/{version}/{category}/{page}.mdx
+```
+
+## Category ที่แนะนำ
+
+- `overview` สำหรับแนะนำ product
+- `quick-start` สำหรับเริ่มต้นใช้งานเร็ว
+- `installation` สำหรับติดตั้งและ deploy
+- `upgrade-guide` สำหรับอัปเกรด
+- `user-guide` สำหรับผู้ใช้งานทั่วไป
+- `administrator-guide` สำหรับ admin และ operator
+- `api-documentation` สำหรับ API และ integration
+- `troubleshooting` สำหรับแก้ปัญหา
+- `faq` สำหรับคำถามที่พบบ่อย
+- `release-notes` สำหรับบันทึกการเปลี่ยนแปลง
+
+## Frontmatter
+
+ทุกไฟล์ควรมี frontmatter
+
+```mdx
+---
+title: "Document Title"
+description: "คำอธิบายสั้นสำหรับ search result และ metadata"
+tags: ["tag-one", "tag-two"]
+---
+```
+
+## Writing guidelines
+
+- เริ่มด้วย heading `#`
+- ใช้ heading `##` เพื่อแบ่งหัวข้อหลัก
+- ใช้ bullet list สำหรับขั้นตอนหรือ checklist
+- ใส่ command ใน code block
+- อธิบาย expected result หลัง command สำคัญ
+- หลีกเลี่ยงข้อมูลลับ เช่น token, password หรือ private key
