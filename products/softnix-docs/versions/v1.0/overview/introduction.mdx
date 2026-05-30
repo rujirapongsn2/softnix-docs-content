@@ -1,0 +1,50 @@
+---
+title: "Softnix Docs Overview"
+description: "ภาพรวมระบบ Softnix Docs และแนวทางการจัดการเอกสารแบบ Git-backed"
+tags: ["softnix-docs", "overview", "documentation-platform"]
+---
+
+# Softnix Docs Overview
+
+Softnix Docs คือระบบจัดการเอกสารผลิตภัณฑ์แบบ AI-ready สำหรับเก็บ อ่าน ค้นหา และเผยแพร่เอกสารของ Softnix products ในรูปแบบที่มนุษย์และ AI coding agents ใช้งานร่วมกันได้
+
+## ใช้ระบบนี้เพื่ออะไร
+
+- รวมเอกสารของหลาย product ไว้ใน portal เดียว
+- เขียนเอกสารด้วย Markdown หรือ MDX
+- แยกเอกสารตาม product, version, category และ page
+- เปิด public documentation portal สำหรับลูกค้าและทีมภายใน
+- สร้าง machine-readable outputs เช่น `llms.txt`, `llms-full.txt` และ JSON knowledge export
+- เตรียม MCP endpoint สำหรับ AI agents อ่าน ค้นหา และสร้าง draft เอกสาร
+
+## โครงสร้างหลัก
+
+```text
+apps/web      Next.js public portal และ admin UI
+apps/api      FastAPI backend
+docs-repo     Git-backed source of truth สำหรับเอกสาร
+deploy        schema และ config สำหรับ production infrastructure
+docs          เอกสารสำหรับทีมพัฒนาและ deployment
+```
+
+## Source of truth
+
+เอกสาร published ทั้งหมดเก็บใน `docs-repo` ตาม path มาตรฐาน
+
+```text
+products/{product_slug}/versions/{version}/{category}/{page}.mdx
+```
+
+ตัวอย่าง path ของคู่มือนี้คือ
+
+```text
+products/softnix-docs/versions/v1.0/overview/introduction.mdx
+```
+
+## กลุ่มผู้ใช้งาน
+
+- Customer อ่านคู่มือและ troubleshooting
+- Product team เขียนและ publish เอกสาร
+- Support team แชร์ลิงก์คำตอบให้ลูกค้า
+- Developer ดู API, installation และ workflow
+- AI coding agents อ่าน ค้นหา และเปิด draft documentation changes
