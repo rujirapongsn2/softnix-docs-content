@@ -1,0 +1,76 @@
+---
+title: "Admin Editorial Workflow"
+description: "workflow การเขียน review approve และ publish เอกสารใน Softnix Docs"
+tags: ["admin-guide", "workflow", "rbac", "github"]
+---
+
+# Admin Editorial Workflow
+
+Softnix Docs ใช้ Git-backed workflow เพื่อให้เอกสารทุกชุดตรวจสอบย้อนหลังได้ และป้องกัน AI agents publish เอกสารโดยไม่มีมนุษย์อนุมัติ
+
+## Roles
+
+- `Author` สร้างหรือแก้ไข draft
+- `Reviewer` ตรวจเอกสารและ approve หรือ request changes
+- `Publisher` publish เอกสารที่ approved แล้ว
+- `Admin` จัดการ users, roles, product config และ system settings
+- `Agent` อ่าน ค้นหา และสร้าง draft ได้ แต่ publish ไม่ได้
+
+## Workflow
+
+```text
+Draft -> Review -> Approved -> Published
+```
+
+ถ้าต้องแก้ไข
+
+```text
+Review -> Changes Requested -> Review
+```
+
+## GitHub behavior
+
+เมื่อสร้าง draft ระบบควรทำงานดังนี้
+
+- สร้าง branch ใหม่จาก published branch
+- commit ไฟล์ MDX ที่แก้ไข
+- เปิด Pull Request
+- ผูก PR กับ workflow item
+- เก็บ audit log ของ actor และ action
+
+## Current implementation
+
+หน้า Admin มี editor สำหรับสร้าง draft แล้ว โดยกำหนด product, version, category, page slug, title, description, tags และ MDX body
+
+หน้า Admin ยังมี Document browser สำหรับดู published documents ตาม product และกด Edit เพื่อโหลดเอกสารเดิมเข้า editor ได้โดยตรง
+
+เมื่อกด Save draft ระบบจะเรียก
+
+```text
+POST /drafts
+```
+
+ถ้าตั้งค่า `GITHUB_TOKEN` แล้ว backend จะพยายามสร้าง branch, commit file และเปิด draft Pull Request ผ่าน GitHub API
+
+ถ้ายังไม่ได้ตั้งค่า `GITHUB_TOKEN` backend จะใช้ local development fallback และเขียน draft ไปที่
+
+```text
+.drafts/{branch}/products/{product}/versions/{version}/{category}/{page}.mdx
+```
+
+fallback นี้ทำให้ทีมทดลอง workflow ได้โดยไม่ต้องต่อ GitHub จริงตั้งแต่วันแรก
+
+## Draft inbox
+
+หน้า Admin มี Draft inbox สำหรับ local development workflow
+
+- แสดง draft ทั้งหมดจาก `.drafts/`
+- แสดง branch และ target file
+- มีปุ่ม Publish local draft เพื่อ copy draft MDX เข้า `docs-repo`
+- publish local draft ต้องใช้ role `publisher`
+
+local publish ใช้สำหรับจำลองขั้นตอน publish ระหว่างพัฒนา ก่อนเชื่อม GitHub PR และ PostgreSQL workflow persistence จริง
+
+## Publish guard
+
+AI agent และ Author ไม่สามารถ publish ได้โดยตรง แม้จะสร้าง draft ได้ก็ตาม การ publish ต้องผ่าน role `Publisher` หรือ `Admin`
