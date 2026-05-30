@@ -1,0 +1,54 @@
+---
+title: "Common Issues"
+description: "ปัญหาที่พบบ่อยในการติดตั้งและใช้งาน Softnix Docs พร้อมแนวทางแก้ไข"
+tags: ["troubleshooting", "local-development", "docker"]
+---
+
+# Common Issues
+
+หน้านี้รวมปัญหาที่พบบ่อยระหว่างพัฒนาและทดลองใช้งาน Softnix Docs
+
+## Backend เปิดไม่ได้เพราะ port 8000
+
+อาการ
+
+```text
+error while attempting to bind on address
+```
+
+แนวทางแก้ไข
+
+- ตรวจว่ามี process อื่นใช้ port อยู่หรือไม่
+- เปลี่ยน port backend เป็น port อื่น
+- อัปเดต `API_BASE_URL` และ `NEXT_PUBLIC_API_BASE_URL`
+
+## Frontend เปิดไม่ได้เพราะ port 3000
+
+อาการ
+
+```text
+EADDRINUSE: address already in use
+```
+
+แนวทางแก้ไข
+
+```bash
+npm --workspace apps/web exec next dev -- --hostname 127.0.0.1 --port 3001
+```
+
+## ไม่เห็นเอกสารใหม่ใน portal
+
+ตรวจสอบ
+
+- วางไฟล์ใน `docs-repo/products/{product}/versions/{version}/{category}/{page}.mdx`
+- ใช้นามสกุล `.mdx`
+- มี frontmatter ถูกต้อง
+- backend `DOCS_REPO_PATH` ชี้ไปยัง path ที่ถูกต้อง
+
+## Search ไม่เจอคำที่ต้องการ
+
+ใน v1 search พื้นฐานอ่านจาก title, description, tags และ body ให้ตรวจว่า keyword อยู่ในส่วนใดส่วนหนึ่งของเอกสาร
+
+## AI agent publish ไม่ได้
+
+เป็น behavior ที่ถูกต้องตาม security model ของระบบ AI agents สามารถสร้าง draft ได้ แต่ publish ต้องผ่านมนุษย์ที่มี role `Publisher` หรือ `Admin`
