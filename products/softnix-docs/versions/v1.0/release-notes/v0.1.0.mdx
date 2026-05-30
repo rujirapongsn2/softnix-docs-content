@@ -1,0 +1,44 @@
+---
+title: "Release Notes v0.1.0"
+description: "บันทึกการเปลี่ยนแปลงรอบแรกของ Softnix Docs platform scaffold"
+tags: ["release-notes", "v0.1.0"]
+---
+
+# Release Notes v0.1.0
+
+Softnix Docs v0.1.0 เป็น implementation รอบแรกตาม PRD สำหรับใช้เป็นฐานพัฒนา documentation platform
+
+## Added
+
+- Next.js public documentation portal
+- Admin workflow UI surface
+- FastAPI backend สำหรับ projects, documents, search, drafts, exports และ MCP manifest
+- Git-backed docs layout
+- Seed product documentation
+- AI-readable outputs: `llms.txt`, `llms-full.txt`, JSON knowledge export
+- Docker Compose stack สำหรับ frontend, backend, worker, PostgreSQL, OpenSearch และ MinIO
+- PostgreSQL starter schema
+- OpenSearch starter mapping
+- Unit tests สำหรับ parser, exports และ RBAC
+- Admin draft editor ที่ save draft ผ่าน backend ได้จริง
+- Admin document browser สำหรับโหลดเอกสารเดิมเข้า editor
+- Local draft inbox พร้อมปุ่ม publish draft เข้า `docs-repo` ใน dev mode
+- Copy button สำหรับ code block ในหน้าเอกสาร
+- Mobile documentation navigation drawer
+- GitHub workflow boundary สำหรับสร้าง branch, commit และ draft Pull Request เมื่อกำหนด `GITHUB_TOKEN`
+- Local `.drafts/` fallback สำหรับทดลอง editorial workflow โดยไม่ต้องใช้ GitHub token
+
+## Current limitations
+
+- GitHub branch และ Pull Request integration มี code path แล้ว แต่ต้องกำหนด GitHub token/repo จริงเพื่อทดสอบกับ remote repository
+- PostgreSQL persistence ยังเป็น starter schema ยังไม่ได้ wire เข้ากับ runtime ทั้งหมด
+- OpenSearch indexing ยังเป็น deployment-ready mapping ยังไม่ได้แทน local search ทั้งหมด
+- AI runtime ยังไม่เรียก provider จริง
+
+## Recommended next steps
+
+- เชื่อม GitHub App สำหรับ branch, commit และ Pull Request
+- เชื่อม PostgreSQL workflow persistence
+- ทำ OpenSearch indexing worker
+- เพิ่ม copy code block และ MDX components ใน portal
+- เพิ่ม semantic search ใน phase ถัดไป
