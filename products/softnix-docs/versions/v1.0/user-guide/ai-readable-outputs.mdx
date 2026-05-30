@@ -1,0 +1,40 @@
+---
+title: "AI-Readable Outputs"
+description: "วิธีใช้ llms.txt, llms-full.txt และ JSON knowledge export"
+tags: ["user-guide", "llms.txt", "ai-ready"]
+---
+
+# AI-Readable Outputs
+
+Softnix Docs สร้าง output ที่ AI tools อ่านได้ เพื่อให้เอกสารกลายเป็น source of truth สำหรับ humans และ agents
+
+## llms.txt
+
+```text
+/llms.txt
+```
+
+เป็น index แบบย่อของเอกสาร published ทั้งหมด เหมาะสำหรับ AI agents ใช้ค้นหาว่าควรอ่านหน้าใดต่อ
+
+## llms-full.txt
+
+```text
+/llms-full.txt
+```
+
+รวมเนื้อหาเต็มของ published documents เหมาะกับ tools ที่ต้อง ingest เอกสารทั้งชุด
+
+## JSON knowledge export
+
+```text
+/exports/knowledge.json
+```
+
+ส่งออกข้อมูลเอกสารในรูปแบบ JSON ที่มี product, version, category, page, title, tags, URL และ body
+
+## ใช้เมื่อไร
+
+- ใช้ `llms.txt` สำหรับ discovery
+- ใช้ `llms-full.txt` สำหรับ ingestion แบบง่าย
+- ใช้ JSON export สำหรับ pipeline ที่ต้องการ structured data
+- ใช้ MCP tools เมื่อ agent ต้องอ่าน ค้นหา หรือสร้าง draft แบบ interactive
