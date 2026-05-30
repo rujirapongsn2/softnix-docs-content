@@ -1,0 +1,100 @@
+---
+title: "Backend API Reference"
+description: "รายการ API หลักของ Softnix Docs backend สำหรับ portal, exports และ MCP metadata"
+tags: ["api", "fastapi", "reference"]
+---
+
+# Backend API Reference
+
+Backend API ให้ frontend, tools และ AI integrations อ่านข้อมูลเอกสารจาก Git-backed repository
+
+## Health
+
+```text
+GET /health
+```
+
+ตรวจสอบสถานะ backend
+
+## Projects
+
+```text
+GET /projects
+```
+
+คืน product ทั้งหมดที่พบใน `docs-repo`
+
+## Documents
+
+```text
+GET /documents
+GET /documents?product=softnix-docs
+GET /documents/{product}/{version}/{category}/{page}
+```
+
+ใช้สำหรับแสดง sidebar และอ่านเนื้อหาเอกสาร
+
+## Search
+
+```text
+GET /search?q=installation
+```
+
+ค้นหาเอกสารจาก title, description, tags และ body
+
+## Drafts
+
+```text
+GET /drafts
+POST /drafts
+POST /drafts/publish
+```
+
+สร้างหรืออัปเดต draft ผ่าน GitHub workflow boundary
+
+ตัวอย่าง request
+
+```json
+{
+  "path": "products/softnix-docs/versions/v1.0/user-guide/new-page.mdx",
+  "title": "New Page",
+  "description": "Drafted from the admin editor",
+  "tags": ["docs", "draft"],
+  "body": "# New Page\n\nWrite content here."
+}
+```
+
+`GET /drafts` ใช้แสดง local draft inbox ในหน้า Admin
+
+`POST /drafts/publish` ใช้จำลอง publish ใน local development โดย copy draft file จาก `.drafts/` เข้า `docs-repo`
+
+ตัวอย่าง response เมื่อยังไม่ได้ตั้งค่า GitHub token
+
+```json
+{
+  "branch": "docs/softnix-docs/new-page-20260530020000",
+  "pull_request_url": "local://docs/softnix-docs/new-page-20260530020000",
+  "file_path": "products/softnix-docs/versions/v1.0/user-guide/new-page.mdx",
+  "commit_sha": null,
+  "provider": "local",
+  "status": "draft"
+}
+```
+
+## AI-readable exports
+
+```text
+GET /llms.txt
+GET /llms-full.txt
+GET /exports/knowledge.json
+```
+
+ใช้สำหรับให้ AI agents และ external tools consume documentation ได้ง่าย
+
+## MCP manifest
+
+```text
+GET /mcp/manifest
+```
+
+แสดงรายการ MCP tools ที่ v1 รองรับ
