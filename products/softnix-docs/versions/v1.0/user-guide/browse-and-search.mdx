@@ -1,0 +1,67 @@
+---
+title: "Browse And Search Documents"
+description: "วิธีอ่านเอกสาร ค้นหา เปลี่ยนหน้า และใช้ public documentation portal"
+tags: ["user-guide", "search", "portal"]
+---
+
+# Browse And Search Documents
+
+ผู้ใช้งานทั่วไปสามารถอ่านเอกสารผ่าน public portal โดยไม่ต้องเข้า admin
+
+## เปิดหน้า product
+
+URL ของ product ใช้รูปแบบ
+
+```text
+/{product_slug}
+```
+
+ตัวอย่าง
+
+```text
+/softnix-docs
+/logger
+/agenticclaw
+```
+
+## เปิดเอกสารเฉพาะหน้า
+
+URL ของหน้าเอกสารใช้รูปแบบ
+
+```text
+/{product_slug}/{version}/{category}/{page}
+```
+
+ตัวอย่าง
+
+```text
+/softnix-docs/v1.0/installation/local-development
+```
+
+## ค้นหาเอกสาร
+
+เปิดหน้า `/search` แล้วค้นหาจาก keyword เช่น
+
+- installation
+- GitHub
+- MCP
+- troubleshooting
+- OpenSearch
+
+Search v1 ใช้ full-text search จาก backend และเตรียม mapping สำหรับ semantic search ในอนาคต
+
+## อ่าน code block
+
+เอกสารรองรับ code block แบบ Markdown
+
+```bash
+npm run build
+```
+
+หน้าเอกสารมีปุ่ม Copy บน code block เพื่อให้ผู้ใช้คัดลอก command ได้ง่ายขึ้น
+
+## Mobile navigation
+
+บนหน้าจอขนาดเล็ก ระบบจะแสดงปุ่ม Browse documentation เพื่อเปิด navigation drawer
+
+ใน drawer ผู้ใช้สามารถเลือกเอกสารตามหมวด เช่น Overview, Installation, User Guide และ API Documentation ได้โดยไม่ต้องเลื่อนผ่าน sidebar แบบ desktop
