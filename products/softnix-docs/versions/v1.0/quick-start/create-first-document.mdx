@@ -1,0 +1,56 @@
+---
+title: "Create Your First Document"
+description: "ตัวอย่างการสร้างเอกสารหน้าแรกใน Softnix Docs ด้วย Git-backed layout"
+tags: ["quick-start", "mdx", "docs-repo"]
+---
+
+# Create Your First Document
+
+คู่มือนี้แสดงตัวอย่างการเพิ่มเอกสารใหม่เข้า Softnix Docs แบบ Git-backed
+
+## เลือก product slug
+
+ใช้ slug เป็นตัวอักษรเล็กและขีดกลาง
+
+```text
+softnix-docs
+logger
+agenticclaw
+```
+
+## สร้างไฟล์ MDX
+
+สร้างไฟล์ตาม path นี้
+
+```text
+docs-repo/products/softnix-docs/versions/v1.0/user-guide/example-page.mdx
+```
+
+ตัวอย่างเนื้อหา
+
+```mdx
+---
+title: "Example Page"
+description: "ตัวอย่างเอกสารหน้าใหม่"
+tags: ["example", "guide"]
+---
+
+# Example Page
+
+เริ่มเขียนเนื้อหาที่นี่
+```
+
+## ตรวจสอบบน portal
+
+เมื่อ backend อ่าน `docs-repo` แล้ว เอกสารจะถูกแสดงใน public portal ที่ URL
+
+```text
+/softnix-docs/v1.0/user-guide/example-page
+```
+
+## แนวทางตั้งชื่อ
+
+- ใช้ slug ภาษาอังกฤษใน path
+- ใช้ title ภาษาไทยหรืออังกฤษใน frontmatter ได้
+- แยกหมวดตามเจตนาของเอกสาร เช่น installation, user-guide, troubleshooting
+- เขียน description ให้สั้นพอสำหรับ search result
