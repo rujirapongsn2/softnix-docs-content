@@ -1,0 +1,40 @@
+---
+title: "System Configuration"
+description: "ค่าตั้งต้นสำคัญสำหรับ backend, frontend, GitHub, search และ storage"
+tags: ["admin-guide", "configuration", "environment"]
+---
+
+# System Configuration
+
+Softnix Docs ใช้ environment variables เพื่อแยก config ออกจาก source code
+
+## Core settings
+
+- `PUBLIC_SITE_URL` public URL ของ documentation portal
+- `API_BASE_URL` backend URL สำหรับ server-side frontend calls
+- `NEXT_PUBLIC_API_BASE_URL` backend URL สำหรับ browser-side calls
+- `DOCS_REPO_PATH` path ของ Git-backed docs repository
+- `JWT_SECRET` secret สำหรับ auth token
+
+## GitHub settings
+
+- `GITHUB_OWNER` GitHub owner หรือ organization
+- `GITHUB_REPO` repository ที่เก็บเอกสาร
+- `GITHUB_TOKEN` token สำหรับ branch, commit และ Pull Request
+
+## Data services
+
+- `DATABASE_URL` PostgreSQL connection string
+- `OPENSEARCH_URL` OpenSearch endpoint
+- `S3_ENDPOINT_URL` S3-compatible endpoint
+- `S3_ACCESS_KEY_ID` storage access key
+- `S3_SECRET_ACCESS_KEY` storage secret key
+- `S3_BUCKET` bucket สำหรับ assets
+
+## Security recommendations
+
+- ใช้ secret manager ใน production
+- จำกัด GitHub token scope ให้เท่าที่จำเป็น
+- ห้าม commit `.env`
+- หมุนเวียน credential เป็นระยะ
+- เปิด HTTPS สำหรับ public portal และ backend
