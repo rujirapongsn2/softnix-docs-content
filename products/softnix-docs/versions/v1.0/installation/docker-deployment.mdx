@@ -1,0 +1,41 @@
+---
+title: "Docker VPS Deployment"
+description: "วิธี deploy Softnix Docs บน Docker VPS พร้อม PostgreSQL, OpenSearch และ MinIO"
+tags: ["installation", "docker", "deployment"]
+---
+
+# Docker VPS Deployment
+
+Softnix Docs v1 ออกแบบให้ deploy บน Docker VPS ได้ด้วย `docker-compose.yml`
+
+## Services
+
+- `frontend` สำหรับ Next.js portal
+- `backend` สำหรับ FastAPI API
+- `worker` สำหรับ background indexing และ sync jobs
+- `postgres` สำหรับ metadata, workflow state, users และ audit logs
+- `opensearch` สำหรับ full-text search
+- `minio` สำหรับ S3-compatible asset storage
+
+## Deployment steps
+
+```bash
+cp .env.example .env
+docker compose up --build -d
+```
+
+หลังจากรันแล้วให้ตรวจสอบ
+
+```bash
+docker compose ps
+curl http://localhost:8000/health
+```
+
+## Production checklist
+
+- ตั้งค่า TLS ผ่าน reverse proxy
+- เปลี่ยน `JWT_SECRET`
+- ใช้ GitHub App หรือ fine-scoped GitHub token
+- จำกัด CORS เป็น domain ของ frontend จริง
+- ตั้ง backup สำหรับ PostgreSQL, OpenSearch, MinIO และ GitHub docs repo
+- ตั้ง monitoring สำหรับ backend health และ indexing jobs
