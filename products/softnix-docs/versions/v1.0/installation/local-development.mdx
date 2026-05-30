@@ -1,0 +1,70 @@
+---
+title: "Local Development Installation"
+description: "วิธีติดตั้ง Softnix Docs สำหรับพัฒนาและทดลองใช้งานบนเครื่อง local"
+tags: ["installation", "local-development", "setup"]
+---
+
+# Local Development Installation
+
+หน้านี้อธิบายวิธีติดตั้ง Softnix Docs บนเครื่อง local สำหรับการพัฒนา ทดลองเขียนเอกสาร และทดสอบ portal
+
+## Requirements
+
+- Node.js 22 หรือใหม่กว่า
+- npm
+- Python 3.9 หรือใหม่กว่า
+- Docker และ Docker Compose สำหรับรัน production-like stack
+
+## ติดตั้ง dependencies
+
+```bash
+npm install
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r apps/api/requirements.txt
+```
+
+## ตั้งค่า environment
+
+คัดลอกไฟล์ตัวอย่าง
+
+```bash
+cp .env.example .env
+```
+
+ค่าที่ควรตรวจสอบก่อนรันระบบ
+
+- `PUBLIC_SITE_URL` URL ของ public portal
+- `API_BASE_URL` URL ของ backend API
+- `DOCS_REPO_PATH` path ไปยัง Git-backed docs repo
+- `JWT_SECRET` secret สำหรับ auth
+- `GITHUB_OWNER` owner ของ GitHub docs repository
+- `GITHUB_REPO` repository ที่ใช้เก็บเอกสาร
+- `GITHUB_TOKEN` token หรือ GitHub App credential สำหรับสร้าง branch และ PR
+
+## รัน backend
+
+```bash
+DOCS_REPO_PATH=/absolute/path/to/docs-repo .venv/bin/uvicorn softnix_docs.main:app --app-dir apps/api --host 127.0.0.1 --port 8000
+```
+
+ตรวจสอบ backend
+
+```bash
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/projects
+```
+
+## รัน frontend
+
+```bash
+API_BASE_URL=http://127.0.0.1:8000 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000 npm run dev
+```
+
+ถ้า port 3000 ถูกใช้อยู่ ให้ใช้ port อื่น
+
+```bash
+API_BASE_URL=http://127.0.0.1:8000 NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000 npm --workspace apps/web exec next dev -- --hostname 127.0.0.1 --port 3001
+```
+
+เปิด portal ที่ `http://127.0.0.1:3001`
