@@ -1,0 +1,31 @@
+---
+title: "MCP Tools"
+description: "MCP tools ที่ Softnix Docs v1 เตรียมไว้สำหรับ AI coding agents"
+tags: ["api", "mcp", "agents"]
+---
+
+# MCP Tools
+
+MCP integration ทำให้ AI coding agents เช่น Codex, Claude Code, Cursor และ AgenticClaw เข้าถึงเอกสาร product ได้โดยตรง
+
+## Tools ใน v1
+
+- `list_projects` แสดง product ทั้งหมด
+- `list_documents` แสดงเอกสารตาม product และ version
+- `read_document` อ่านเอกสารหน้าเดียว
+- `search_document` ค้นหาเอกสาร
+- `create_document` สร้าง draft document
+- `update_document` อัปเดต draft document
+
+## Deferred tools
+
+เครื่องมือต่อไปนี้ยังไม่เปิดใช้ใน v1 เพราะต้องพึ่ง AI runtime และ publish guard เพิ่มเติม
+
+- `publish_document`
+- `create_release_note`
+- `generate_installation_guide`
+- `generate_user_manual`
+
+## Permission model
+
+AI agents อ่าน ค้นหา และสร้าง draft ได้ แต่ publish ไม่ได้ การ publish ต้องทำโดยมนุษย์ที่มี role `Publisher` หรือ `Admin`
